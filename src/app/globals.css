@@ -5,9 +5,17 @@
 :root {
   --background: #161618;
   --foreground: #ededed;
-  --header-background: #1c1c1e;
-  --header-border: #272729;
-  --header-foreground: #6c6c70;
+
+  --primary: #3f42f3;
+
+  --border: #272729;
+
+  --card-background: #1c1c1e;
+  --card-foreground: #6c6c70;
+
+  --input-background: #161618;
+  --input-focus-background: #353539;
+  --input-focus-foreground: #bbbac0;
 }
 
 body {

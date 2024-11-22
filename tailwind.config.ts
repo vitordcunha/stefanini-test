@@ -5,12 +5,20 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: "var(--primary)",
         background: "var(--background)",
         foreground: "var(--foreground)",
-        header: {
-          background: "var(--header-background)",
-          foreground: "var(--header-foreground)",
-          border: "var(--header-border)",
+        border: "var(--border)",
+        card: {
+          background: "var(--card-background)",
+          foreground: "var(--card-foreground)",
+        },
+        input: {
+          background: "var(--input-background)",
+          focus: {
+            border: "var(--input-focus-background)",
+            foreground: "var(--input-focus-foreground)",
+          },
         },
       },
     },
