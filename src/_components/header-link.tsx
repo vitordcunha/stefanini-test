@@ -17,7 +17,7 @@ const HeaderLink = ({ children, to: href }: HeaderLinkProps) => {
     <Link
       href={href}
       className={cn(
-        "text-header-foreground font-light hover:text-white transition-colors",
+        "text-card-foreground font-light hover:text-white transition-colors",
         {
           "text-white font-bold": isActive,
         }
