@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import Input, { InputProps } from "./input";
+import FormInput, { InputProps } from "./form-input";
 import SearchResult, { SearchResultResponse } from "./search-result";
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -54,7 +54,7 @@ const SearchForm = () => {
     <form onSubmit={handleSubmit} className="w-full">
       <div className="flex flex-col gap-5">
         {inputs.map((input) => (
-          <Input key={input.name} {...input} />
+          <FormInput key={input.name} {...input} />
         ))}
       </div>
 
