@@ -22,7 +22,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} h-screen w-screen flex flex-col`}>
         <Header />
-        <main className="w-full h-full">{children}</main>
+        <main className="w-full h-full">
+          <div className="flex h-full w-full justify-center items-center">
+            <div className="bg-card-background p-10 border border-border rounded-lg">
+              {children}
+            </div>
+          </div>
+        </main>
       </body>
     </html>
   );
