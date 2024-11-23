@@ -104,7 +104,9 @@ const History = () => {
           <ChevronLeft />
         </button>
 
-        <span className="text-sm">{currentPage}</span>
+        <span className="text-sm">
+          {currentPage} / {totalPages}
+        </span>
 
         <button
           className="p-2 rounded-full hover:bg-card-foreground"
