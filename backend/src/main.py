@@ -17,19 +17,16 @@ logger.setLevel(logging.INFO)
 async def lifespan(app: FastAPI):
     # Initialize DB connection on startup
     DATABASE_NAME = os.getenv('MONGODB_DATABASE')
-    MONGO_INITDB_ROOT_USERNAME = os.getenv('MONGO_INITDB_ROOT_USERNAME')
-    MONGO_INITDB_ROOT_PASSWORD = os.getenv('MONGO_INITDB_ROOT_PASSWORD')
+    MONGODB_URL = os.getenv('MONGODB_URL')
 
-    if not DATABASE_NAME or not MONGO_INITDB_ROOT_USERNAME or not MONGO_INITDB_ROOT_PASSWORD:
+    if not DATABASE_NAME or not MONGODB_URL:
         logger.error("MongoDB URI and database name must be set")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="MongoDB URI and database name must be set")
     
-    connection_string = f"mongodb://{MONGO_INITDB_ROOT_USERNAME}:{MONGO_INITDB_ROOT_PASSWORD}@localhost:27017"
-
-    logger.info(f"Connection string: {connection_string}")
+    logger.info(f"Connection string: {MONGODB_URL}")
     logger.info(f"Database name: {DATABASE_NAME}")
 
-    app.mongodb_client = AsyncIOMotorClient(connection_string)
+    app.mongodb_client = AsyncIOMotorClient(MONGODB_URL)
     app.database = app.mongodb_client[DATABASE_NAME]
     
     yield

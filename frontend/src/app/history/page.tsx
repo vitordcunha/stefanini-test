@@ -1,8 +1,8 @@
 import HistoryTable from "@/_components/history-table";
 
 const History = async () => {
-  const history = await fetch(`${process.env.API_URL}`).then((res) =>
-    res.json()
+  const history = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`).then(
+    (res) => res.json()
   );
 
   return <HistoryTable history={history} />;
