@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException, status, Form
 import requests
-import os
 import logging
 from motor.motor_asyncio import AsyncIOMotorClient
 from contextlib import asynccontextmanager
@@ -10,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .schemas import Data, FetchMovieResponse, Movie
 from .models import QueryCollection
+from .config import settings
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -17,8 +17,8 @@ logger.setLevel(logging.INFO)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Initialize DB connection on startup
-    DATABASE_NAME = os.getenv('MONGODB_DATABASE')
-    MONGODB_URL = os.getenv('MONGODB_URL')
+    DATABASE_NAME = settings.mongodb_database
+    MONGODB_URL = settings.mongodb_url
 
     if not DATABASE_NAME or not MONGODB_URL:
         logger.error("MongoDB URI and database name must be set")
@@ -54,8 +54,8 @@ async def get_movie(data: Annotated[Data, Form()]):
     logger.info(f"Received data: {data}")
 
     # Get API URL and access token
-    api_url = os.getenv('API_URL')
-    access_token = os.getenv('ACCESS_TOKEN')
+    api_url = settings.api_url
+    access_token = settings.access_token
 
     if not api_url or not access_token:
         logger.error("API URL or access token is not set")
