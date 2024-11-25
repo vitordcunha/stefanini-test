@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
 import Header from "@/_components/header";
@@ -29,6 +32,8 @@ export default function RootLayout({
             </div>
           </div>
         </main>
+
+        <ToastContainer theme="dark" />
       </body>
     </html>
   );
