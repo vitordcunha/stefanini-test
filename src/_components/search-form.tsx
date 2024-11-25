@@ -1,50 +1,43 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import FormInput, { InputProps } from "./form-input";
 import SearchResult, { SearchResultResponse } from "./search-result";
 
-interface FormElements extends HTMLFormControlsCollection {
-  username: HTMLInputElement;
-  search_value: HTMLInputElement;
-}
-
-interface CustomFormElements extends HTMLFormElement {
-  readonly elements: FormElements;
-}
+import { searchMovie } from "@/app/actions";
 
 const SearchForm = () => {
   const [searchResult, setSearchResult] = useState<SearchResultResponse>();
+  const [isLoading, setIsLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<CustomFormElements>) {
-    e.preventDefault(); // Prevent form submission
-
-    // Get form data.
-    const target = e.currentTarget;
-    const data = {
-      username: target.username.value,
-      movieName: target.search_value.value,
-    };
-
-    // TODO: Send the data to your backend API or perform any other required actions.
-    console.log(data);
-
-    setSearchResult({
-      name: "Test Movie",
-      release_year: "2022",
-      rating: "9.5",
-    });
+  function handleSubmitError(error: Error) {
+    toast.error(error.message);
   }
 
-  const inputs: InputProps[] = [
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault(); // Prevent form submission
+    setIsLoading(true);
+
+    // Get form data.
+    const formData = new FormData(e.currentTarget);
+
+    // send data to backend and handle response and error 404, 500
+    searchMovie(formData)
+      .then((data) => setSearchResult(data))
+      .catch(handleSubmitError)
+      .finally(() => setIsLoading(false));
+  }
+
+  const formInputs: InputProps[] = [
     {
       name: "username",
       label: "Digite seu nome",
       required: true,
     },
     {
-      name: "search_value",
+      name: "movie_name",
       label: "Digite o nome do filme",
       required: true,
     },
@@ -53,16 +46,17 @@ const SearchForm = () => {
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <div className="flex flex-col gap-5">
-        {inputs.map((input) => (
+        {formInputs.map((input) => (
           <FormInput key={input.name} {...input} />
         ))}
       </div>
 
       <button
         type="submit"
-        className="mt-6 rounded-lg bg-blue-700 text-white w-full p-3 transition-colors hover:bg-blue-600"
+        className="mt-6 rounded-lg bg-blue-700 text-white w-full p-3 transition-colors hover:bg-blue-600 disabled:opacity-50"
+        disabled={isLoading}
       >
-        Search
+        {isLoading ? "Buscando..." : "Buscar"}
       </button>
 
       <SearchResult value={searchResult} />
