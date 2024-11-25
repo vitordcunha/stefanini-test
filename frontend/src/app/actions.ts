@@ -1,6 +1,7 @@
 "use server";
 
 export async function searchMovie(formData: FormData) {
+  console.log("teste: ", process.env.API_URL);
   const res = await fetch(`${process.env.API_URL}`, {
     method: "POST",
     body: formData,
