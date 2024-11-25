@@ -47,14 +47,23 @@ This is a full-stack project designed to search for movies using a public API an
 
 ### Running the project
 
+1. Set the environment variables in the `backend/.env.local` file.
+
 ```bash
-make run-dev
+MONGODB_URL=mongodb://mongodb:27017
+MONGODB_DATABASE=movie_db
+API_URL=http://backend:8000
+ACCESS_TOKEN=<your_access_token>
 ```
 
----
-
-### Stopping the project
+2. Set the environment variables in the `frontend/.env.local` file.
 
 ```bash
-make stop
+API_URL=http://backend:8000
+```
+
+3. Run the project
+
+```bash
+make run-dev
 ```
