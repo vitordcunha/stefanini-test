@@ -6,6 +6,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Annotated
+from fastapi.middleware.cors import CORSMiddleware
 
 from .schemas import Data, FetchMovieResponse, Movie
 from .models import QueryCollection
@@ -35,6 +36,18 @@ async def lifespan(app: FastAPI):
     app.mongodb_client.close()
 
 app = FastAPI(lifespan=lifespan)
+
+# Updated CORS configuration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",  # Browser access
+        "http://frontend:3000",   # Docker internal network access
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/", response_model=Movie, status_code=status.HTTP_200_OK)
 async def get_movie(data: Annotated[Data, Form()]):
