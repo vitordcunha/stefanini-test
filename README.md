@@ -35,3 +35,26 @@ This is a full-stack project designed to search for movies using a public API an
 ### Infrastructure
 
 - Docker & Docker Compose
+
+---
+
+## **Running the project**
+
+### Requirements
+
+- Docker
+- Make
+
+### Running the project
+
+```bash
+make run-dev
+```
+
+---
+
+### Stopping the project
+
+```bash
+make stop
+```

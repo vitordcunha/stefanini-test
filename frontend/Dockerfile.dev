@@ -3,11 +3,15 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
-RUN npm install
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn
 
 # Copy the rest of the code
 COPY . .
+
+# Build environment variables will be set from docker-compose
+ENV NEXT_PUBLIC_API_URL=http://localhost:8000
 
 EXPOSE 3000
 CMD ["npm", "run", "dev"]
